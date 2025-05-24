@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Hero } from '@/components';
 import { PostProps } from '@/types/post.type';
 import { getItemBySlug } from '@/utils';
@@ -5,11 +6,7 @@ import { Phone } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   try {
     const slug = params?.slug;
     const data: PostProps = await getItemBySlug(slug);
@@ -39,8 +36,12 @@ export async function generateMetadata({
   }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const slug = await params?.slug;
+type PageProps = {
+  params: any;
+};
+
+export default async function Page({ params }: PageProps) {
+  const slug = params?.slug;
   const data: PostProps = await getItemBySlug(slug);
   const post = data.objects[0];
 
